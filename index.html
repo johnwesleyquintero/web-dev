@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JYSN — REPPIN DEEP</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Basic reset & layout */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-color: #080808;
+      --card-bg: #121212;
+      --primary-red: #e63946;
+      --accent-gold: #d4af37;
+      --accent-blue: #a8dadc;
+      --text-main: #f5f5f5;
+      --text-muted: #b0b0b0;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* HEADER / HERO */
+    header {
+      text-align: center;
+      padding: 6rem 1rem 4rem 1rem;
+      background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 100%);
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary-red), transparent);
+    }
+    header .band-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    header h1 {
+      font-family: 'Metal Mania', cursive;
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      color: var(--primary-red);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
+      animation: titlePulse 3s infinite ease-in-out;
+      line-height: 1.1;
+    }
+    @keyframes titlePulse {
+      0%, 100% { transform: scale(1); text-shadow: 0 0 15px rgba(230, 57, 70, 0.4); }
+      50% { transform: scale(1.02); text-shadow: 0 0 25px rgba(230, 57, 70, 0.8); }
+    }
+    header p {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      margin-top: 1.5rem;
+      color: var(--accent-blue);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s forwards ease-out;
+    }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      color: var(--accent-gold);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(212, 175, 55, 0.3);
+    }
+
+    /* ARTWORK SECTION */
+    .artwork-container {
+      text-align: center;
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease;
+    }
+    .artwork-container:hover {
+      transform: translateY(-5px);
+    }
+    .artwork-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      border: 1px solid var(--accent-gold);
+      margin-bottom: 1.5rem;
+      filter: grayscale(20%) contrast(110%);
+      transition: filter 0.3s ease;
+    }
+    .artwork-container:hover img {
+      filter: grayscale(0%) contrast(120%);
+    }
+    .artwork-container p {
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    /* GRID FOR LYRICS & LORE */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 992px) {
+      .content-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    /* LYRICS STYLING */
+    .lyrics-box {
+      max-height: 800px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-red) var(--card-bg);
+    }
+    .lyrics-box::-webkit-scrollbar { width: 6px; }
+    .lyrics-box::-webkit-scrollbar-track { background: var(--card-bg); }
+    .lyrics-box::-webkit-scrollbar-thumb { background: var(--primary-red); border-radius: 10px; }
+
+    .lyrics-box pre {
+      white-space: pre-wrap;
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-main);
+      text-align: center;
+    }
+    .lyrics-box blockquote {
+      font-style: italic;
+      color: var(--accent-blue);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      border: none;
+      padding: 0;
+    }
+    .lyrics-box h3 {
+      font-family: 'Oswald', sans-serif;
+      color: var(--primary-red);
+      text-align: center;
+      margin: 2rem 0 1rem 0;
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      border-bottom: 1px solid rgba(230, 57, 70, 0.2);
+      padding-bottom: 0.5rem;
+    }
+
+    /* LORE STYLING */
+    .lore-box {
+      max-height: 800px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-gold) var(--card-bg);
+    }
+    .lore-box::-webkit-scrollbar { width: 6px; }
+    .lore-box::-webkit-scrollbar-track { background: var(--card-bg); }
+    .lore-box::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 10px; }
+
+    .lore-box h3 {
+      font-family: 'Oswald', sans-serif;
+      color: var(--primary-red);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lore-box h3:first-child { margin-top: 0; }
+    .lore-box h4 {
+      font-family: 'Oswald', sans-serif;
+      color: var(--accent-gold);
+      margin: 1.5rem 0 0.5rem 0;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+    .lore-box p {
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .lore-box ul {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    .lore-box li {
+      margin-bottom: 0.8rem;
+      padding-left: 2rem;
+      position: relative;
+      color: var(--text-main);
+    }
+    .lore-box li::before {
+      content: '🐺';
+      position: absolute;
+      left: 0;
+      font-size: 0.9rem;
+      top: 0.2rem;
+    }
+    .lore-box strong { color: var(--accent-gold); }
+
+    /* AUDIO PLAYER */
+    .audio-player {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid var(--primary-red);
+      box-shadow: 0 0 30px rgba(230, 57, 70, 0.1);
+    }
+    .audio-player h3 {
+      font-family: 'Oswald', sans-serif;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+    audio {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 1.5rem;
+      filter: invert(100%) hue-rotate(180deg) brightness(1.5);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 5rem 1rem;
+      background: #050505;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+    footer .footer-band {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    footer a {
+      color: var(--primary-red);
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      padding: 0 10px;
+    }
+    footer a:hover {
+      color: var(--accent-gold);
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+    }
+
+    /* UTILS */
+    .highlight { color: var(--primary-red); font-weight: bold; }
+    .lore-quote {
+      font-style: italic;
+      color: var(--accent-blue);
+      text-align: center;
+      margin-bottom: 2rem;
+      display: block;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <span class="band-name">JYSN</span>
+    <h1>REPPIN DEEP</h1>
+    <p>Fen awakens. Wes unleashes. Music meets lore.</p>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+
+    <!-- ARTWORK SECTION -->
+    <section id="artwork">
+      <h2>Artwork Concept</h2>
+      <div class="artwork-container">
+        <img src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t39.30808-6/467703095_885421133701378_3095283726822488385_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeEgPR3eLjI_Z3qZNxayfWr2trINA6-CLBq2sg0Dr4IsGm76Cl7vBKx4qD38-h3ouOeuZ7eJDvSJPRHbdVJUhokf&_nc_ohc=OxTsG1KILL8Q7kNvwHUuZwq&_nc_oc=AdoTy81rXSeHBFppE7SVDFNKMUsbkDgFGEL9r530Irrm4jprM27tGGbqGlsbHSCNfbU&_nc_zt=23&_nc_ht=scontent.fdvo1-1.fna&_nc_gid=_BdScI1tAYf6dMgFOB9uYQ&oh=00_Af2_-qDnSoiW2TZSqBHHgMIYFNL9J51TMBQfU8VnuDNMQA&oe=69F16215" alt="reppin deep">
+        <p>"Fen emerging from within Wes — the moment of awakening."</p>
+      </div>
+    </section>
+
+    <div class="content-grid">
+      <!-- LYRICS SECTION -->
+      <section id="lyrics">
+        <h2>The Lyrics</h2>
+        <div class="card lyrics-box">
+          <blockquote>"You buried the monster… but it learned how to breathe."</blockquote>
+          
+          <h3>Verse 1</h3>
+          <pre>
+Chains were forged to keep me still
+Buried deep beneath my will
+Silence carved into my veins
+Feeding off suppressed pain
+
+Shadows whisper in my mind
+Echoes of a cursed design
+Something stirs I can't contain
+Breaking free from every chain
+          </pre>
+
+          <h3>Pre-Chorus</h3>
+          <pre>
+I feel it crawling under skin
+A war I know I’ll never win
+          </pre>
+
+          <h3>Chorus</h3>
+          <pre>
+Unleash REPPIN DEEP
+Let the darkness finally begin
+No more fear, no more disguise
+I see the truth behind these eyes
+
+I am the rage you tried to cage
+Now I’m breaking out of this prisoned rage
+Hear the howl beneath my skin
+I am REPPIN DEEP
+          </pre>
+
+          <h3>Verse 2</h3>
+          <pre>
+I remember who I was
+Before the lies, before the loss
+Now the mirror shows a ghost
+But the beast is growing close
+
+Every breath ignites the flame
+I will never be the same
+No more chains to hold me down
+I embrace what I’ve become
+          </pre>
+
+          <h3>Pre-Chorus</h3>
+          <pre>
+I hear it calling from below
+A voice I’m starting now to know
+          </pre>
+
+          <h3>Chorus</h3>
+          <pre>
+Unleash REPPIN DEEP
+Let the darkness finally begin
+No more fear, no more disguise
+I see the truth behind these eyes
+
+I am the rage you tried to cage
+Now I’m breaking out of this prisoned rage
+Hear the howl beneath my skin
+I am REPPIN DEEP
+          </pre>
+
+          <h3>Bridge / Breakdown</h3>
+          <pre>
+You tried to bury me alive
+But I was born to survive
+
+Now the beast has found its name
+Fen… awaken in the flame
+
+No gods above, no chains remain
+Only fury, only pain
+          </pre>
+
+          <h3>Final Chorus</h3>
+          <pre>
+Unleash REPPIN DEEP
+Let the world hear where I’ve been
+Through the fire, through the lies
+I was never meant to die
+
+I am the end of your control
+The resurrection of my soul
+Hear the howl beneath my skin
+I am REPPIN DEEP
+          </pre>
+
+          <h3>Outro</h3>
+          <pre>
+It was never gone…
+It was waiting.
+          </pre>
+        </div>
+      </section>
+
+      <!-- LORE SECTION -->
+      <section id="lore">
+        <h2>The Lore</h2>
+        <div class="card lore-box">
+          <span class="lore-quote">"Some beasts are born in shadow… others awaken in fire."</span>
+          
+          <h3>Universe Overview</h3>
+          <p>A dark, dystopian world fractured between oppressive powers and forgotten lands. Ancient forces seep through the cracks of reality. Fen, the beast, is an ancient entity bound to Wes’s lineage.</p>
+          
+          <h3>Characters</h3>
+          <h4>Wes</h4>
+          <ul>
+            <li><strong>Role:</strong> Protagonist / human vessel</li>
+            <li><strong>Personality:</strong> Resilient, strategic, emotionally layered</li>
+            <li><strong>Arc:</strong> From restraint to self-acceptance; discovers inner potential through trials</li>
+          </ul>
+
+          <h4>Fen</h4>
+          <ul>
+            <li><strong>Role:</strong> The Beast Within</li>
+            <li><strong>Personality:</strong> Primal, unstoppable, instinctive</li>
+            <li><strong>Powers:</strong> Superhuman strength, regenerative abilities, heightened perception</li>
+            <li><strong>Visual Cue:</strong> Wolf-like, shadowy, ethereal, glowing eyes</li>
+          </ul>
+
+          <h3>Core Concept</h3>
+          <p>Fen is the manifestation of everything Wes suppressed: anger, rebellion, power, and instinct.</p>
+          <ul>
+            <li>It sleeps within until circumstances trigger its emergence</li>
+            <li>Awakening represents transformation and liberation</li>
+            <li>Not inherently evil — Fen reflects true self and raw potential</li>
+          </ul>
+
+          <h3>Story Arc: Awakening</h3>
+          <p>Wes is trapped in a world of suppression. Emotional chains manifest physically and mentally. Fen begins to stir, whispering in shadow. The single captures the moment of first emergence, both terrifying and empowering.</p>
+
+          <h3>Future Expansion</h3>
+          <p>The journey continues with the <strong>EP: Fen Awakens</strong> and the full album <strong>REPPIN DEEP</strong>, exploring alternate realms, tyrannical powers, and the evolution of Fen + Wes.</p>
+
+          <span class="lore-quote" style="margin-top: 2rem;">"Fen was always within Wes. The single is the first roar."</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- AUDIO SECTION -->
+    <section id="audio">
+      <h2>Listen to the Demo</h2>
+      <div class="audio-player">
+        <h3>Raw preview of <span class="highlight">REPPIN DEEP</span></h3>
+        <p>Experience the moment Fen awakens.</p>
+        <audio controls>
+          <source src="audio/beast-from-within-demo.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-band">JYSN</span>
+    <p>&copy; 2026 Project by Wes & Team</p>
+    <p style="margin-top: 15px;">
+      <a href="https://github.com/wes-repo/beast-from-within" target="_blank">GitHub</a> | 
+      <a href="#artwork">Concept Art</a> | 
+      <a href="#lyrics">Lyrics</a> |
+      <a href="#lore">Lore</a>
+    </p>
+  </footer>
+
+</body>
+</html>
